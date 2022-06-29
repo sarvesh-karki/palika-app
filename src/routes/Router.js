@@ -11,6 +11,7 @@ const BeneficiaryDetails = lazy(() => import('../modules/beneficary/detail/index
 const AddBeneficiary = lazy(() => import('../modules/beneficary/add'));
 const EditBeneficiary = lazy(() => import('../modules/beneficary/edit'));
 const issueBudget = lazy(() => import('../modules/beneficary/detail/issue'));
+const AddBeneficiaryDetail = lazy(() => import ('../modules/aid/detail/addBeneficiary'));
 
 // Institutions
 const InstitutionList = lazy(() => import('../modules/institution'));
@@ -42,21 +43,9 @@ const ListUsers = lazy(() => import('../modules/user/list'));
 const AddUser = lazy(() => import('../modules/user/add'));
 const UserDetails = lazy(() => import('../modules/user/edit'));
 
-// Kobo tool
-const ListKobotool = lazy(() => import('../modules/kobotool/list'));
-const KoboToolboxSetting = lazy(() => import('../modules/kobotool/settings'));
-const KoboToolboxFormDetails = lazy(() => import('../modules/kobotool/forms/details'));
-
 // Aid connect
 const AidConnectList = lazy(() => import('../modules/aid_connect/list'));
 const AidConnectCreateForm = lazy(() => import('../modules/aid_connect/create_forms'));
-
-// Reporting
-const Reporting = lazy(() => import('../modules/reporting'));
-const ReportProject = lazy(() => import('../modules/reporting/project_report'));
-const ReportBeneficiary = lazy(() => import('../modules/reporting/beneficiary_report'));
-const ReportMobilizer = lazy(() => import('../modules/reporting/mobilizer_report'));
-const ReportVendor = lazy(() => import('../modules/reporting/vendor_report'));
 
 // Vendor
 const Vendor = lazy(() => import('../modules/vendor'));
@@ -68,6 +57,8 @@ const EditVendor = lazy(() => import('../modules/vendor/edit'));
 
 const VendorAdd = lazy(() => import('../views/vendors/add'));
 const VendorDetail = lazy(() => import('../views/vendors/detail'));
+const FspDetail = lazy(() => import('../modules/aid/detail/fspDetail'));
+const AddFsp = lazy(() => import('../modules/aid/detail/addFsp'));
 
 // ------------------------------Notification UI------------------------------------
 const NotificationList = lazy(() =>
@@ -77,6 +68,24 @@ const NotificationList = lazy(() =>
 // --------------------------------------------------------------------------------
 
 let AppRoutes = [
+	{
+		path:'/beneficiary/addBeneficiary',
+		name:'AddBeneficiary',
+		component: AddBeneficiaryDetail,
+		showInSidebar: false
+	},
+	{
+		path: '/projects/fspDetail',
+		name: 'FspDetail',
+		component: FspDetail,
+		showInSidebar: false
+	},
+	{
+		path: '/projects/addFsp',
+		name: 'AddFSP',
+		component: AddFsp,
+		showInSidebar: false
+	},
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
@@ -122,13 +131,16 @@ let AppRoutes = [
 		icon: 'users',
 		component: AddBeneficiary
 	},
-
 	{
 		path: '/projects/:id',
 		name: 'Aid',
 		component: AidDetails
 	},
-
+	{
+		path: '/projects/current',
+		name: 'Aid',
+		component: AidDetails
+	},
 	{
 		path: '/projects',
 		name: 'Projects',
@@ -269,16 +281,6 @@ let AppRoutes = [
 		showInSidebar: false
 	},
 	{
-		path: '/kobo-toolbox-setting',
-		name: 'KoboToolboxSetting',
-		component: KoboToolboxSetting
-	},
-	{
-		path: '/kobo-toolbox/:id',
-		name: 'KoboToolboxFormDetails',
-		component: KoboToolboxFormDetails
-	},
-	{
 		path: '/aid-connect/form',
 		name: 'AidConnectCreateForm',
 		component: AidConnectCreateForm
@@ -289,27 +291,6 @@ let AppRoutes = [
 		component: NotificationList
 	},
 	{
-		path: '/report-project',
-		name: 'ReportProject',
-		component: ReportProject
-	},
-	{
-		path: '/report-beneficiary',
-		name: 'ReportBeneficiary',
-		component: ReportBeneficiary
-	},
-	{
-		path: '/report-mobilizer',
-		name: 'ReportMobilizer',
-		component: ReportMobilizer
-	},
-	{
-		path: '/report-vendor',
-		name: 'ReportVendor',
-		component: ReportVendor
-	},
-
-	{
 		collapse: true,
 		path: '/dashboard',
 		name: 'Administration',
@@ -317,30 +298,11 @@ let AppRoutes = [
 		showInSidebar: false,
 		icon: 'lock',
 		child: [
-			// {
-			// 	path: '/settings',
-			// 	name: 'Settings',
-			// 	mini: 'B',
-			// 	icon: 'mdi mdi-adjust',
-			// 	component: Settings
-			// },
-			{
-				path: '/reporting',
-				name: 'Reporting',
-				icon: 'mdi mdi-adjust',
-				component: Reporting
-			},
 			{
 				path: '/users',
 				name: 'Users',
 				icon: 'mdi mdi-adjust',
 				component: ListUsers
-			},
-			{
-				path: '/kobo-toolbox',
-				name: 'KoBoToolbox',
-				icon: 'mdi mdi-adjust',
-				component: ListKobotool
 			},
 			{
 				path: '/aid-connect',
@@ -350,6 +312,6 @@ let AppRoutes = [
 			}
 		]
 	},
-	{ path: '/', pathTo: '/dashboard', name: 'Dashboard', redirect: true }
+	{ path: '/', pathTo: '/projects/current', name: 'Aid', redirect: true }
 ];
 export default AppRoutes;

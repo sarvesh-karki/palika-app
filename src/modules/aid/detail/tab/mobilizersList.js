@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback, useState } from 'react';
-import { Table } from 'reactstrap';
+import { Table, CustomInput, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { AidContext } from '../../../../contexts/AidContext';
@@ -37,6 +37,34 @@ const List = ({ projectId }) => {
 
 	return (
 		<>
+		<div>
+				<div className="row">
+					<div style={{ flex: 1}}>
+					</div>
+					<CustomInput
+						type="select"
+						id="exampleCustomSelect"
+						name="customSelect"
+						defaultValue=""
+						style={{ marginRight: '5px',width:'12%' }}
+					>
+						<option value="phone">Filter By</option>
+						<option value="name">Name</option>
+						<option value="phoneNumber">Phone Number</option>
+						<option value="banked-unbanked">Banked / Unbanked</option>
+						<option value="gender">Gender</option>
+					</CustomInput>
+					<Input
+						placeholder='Search Here ...'
+						style={{ marginRight: '5px',width:'12%' }}
+					/>
+				</div>
+				<div className="flex-item">
+					{/* <button type="button" className="btn waves-effect waves-light btn-info" style={{ borderRadius: '8px' }}>
+						Add Beneficiary
+					</button> */}
+				</div>
+			</div>
 			<Table className="no-wrap v-middle" responsive>
 				<thead>
 					<tr className="border-0">
@@ -66,7 +94,7 @@ const List = ({ projectId }) => {
 						})
 					) : (
 						<tr>
-							<td colSpan={2}></td>
+							<td colSpan={3}></td>
 							<td>No data available.</td>
 							<td colSpan={2}></td>
 						</tr>

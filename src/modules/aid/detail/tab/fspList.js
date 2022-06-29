@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { Table, FormGroup, InputGroup, Input,CustomInput } from 'reactstrap';
+import { Table, FormGroup, InputGroup, Input } from 'reactstrap';
 import { useToasts } from 'react-toast-notifications';
 import QRCode from 'qrcode';
 import * as XLSX from 'xlsx';
@@ -15,7 +15,6 @@ import PasscodeModal from '../../../global/PasscodeModal';
 import UploadList from './uploadList';
 import AdvancePagination from '../../../global/AdvancePagination';
 import MaskLoader from '../../../global/MaskLoader';
-import MiniSpinner from '../../../global/MiniSpinner';
 
 const { PAGE_LIMIT, BULK_BENEFICIARY_LIMIT } = APP_CONSTANTS;
 
@@ -314,113 +313,24 @@ const List = ({ projectId }) => {
 			<div>
 				<div className="row">
 					<div style={{ flex: 1, padding: 10 }}>
-						<button
-							onClick={() => toggleAmountModal(ACTION.BULK_ISSUE)}
+					</div>
+					<div style={{ padding: 10, float: 'right' }}>
+                    <input
+						type="text"
+                        placeholder='Search ...'
+                        className='custom-input-box-2'
+                        style={{marginRight:'8px'}}						
+                        />
+                        <button
 							type="button"
 							className="btn waves-effect waves-light btn-outline-info"
 							style={{ borderRadius: '8px', marginRight: '20px' }}
 						>
-							Bulk Token Issue
+							<Link to={`/projects/addFsp`}>Add FSP</Link>
 						</button>
-						<button
-							type="button"
-							onClick={() => toggleAmountModal(ACTION.BULK_QR)}
-							className="btn waves-effect waves-light btn-outline-info"
-							style={{ borderRadius: '8px' }}
-						>
-							Bulk Generate QR Code
-						</button>
-					</div>
-					<div style={{ padding: 10, float: 'right' }}>
-						<button
-							type="button"
-							onClick={handleFileUploadClick}
-							className="btn waves-effect waves-light btn-outline-info"
-							style={{ borderRadius: '8px' }}
-						>
-							Upload Beneficiaries
-						</button>
-						<input
-							type="file"
-							ref={hiddenFileInput}
-							onChange={handleFileChange}
-							accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-							style={{ display: 'none' }}
-						/>
 					</div>
 				</div>
-			
-				{/* <Row>
-					<Col md="12">
-						<div
-							style={{
-								float: 'right',
-								display: 'flex',
-								justifyContent:'flex-end'
-							}}
-						>
-							<CustomInput
-								type="select"
-								id="exampleCustomSelect"
-								name="customSelect"
-								defaultValue=""
-								style={{ marginRight: '5px' }}
-							>
-								<option value="phone">Search By Phone</option>
-								<option value="name">By Name</option>
-							</CustomInput>
-							<div style={{ display: 'inline-flex' }}>
-								<Input
-									placeholder=''
-									style={{ width: '100%' }}
-								/>
-							</div>
-							<div>
-								<Button className="btn" color="info">
-									Add New
-								</Button>
-						</div>
-						</div>
-					</Col>
-				</Row> */}
 
-				<div className="flex-item">
-					{/* <button type="button" className="btn waves-effect waves-light btn-info" style={{ borderRadius: '8px' }}>
-						Add Beneficiary
-					</button> */}
-				</div>
-			</div>
-			<div>
-				<div className="row">
-					<div style={{ flex: 1}}>
-					</div>
-					<CustomInput
-						type="select"
-						id="exampleCustomSelect"
-						name="customSelect"
-						defaultValue=""
-						style={{ marginRight: '5px',width:'12%' }}
-					>
-						<option value="phone">Filter By</option>
-						<option value="name">Name</option>
-						<option value="phoneNumber">Phone Number</option>
-						<option value="banked-unbanked">Banked / Unbanked</option>
-						<option value="gender">Gender</option>
-					</CustomInput>
-					<Input
-						placeholder=''
-						style={{ marginRight: '5px',width:'12%' }}
-					/>
-					<div style={{float: 'right' }}>
-						<button
-							type="button"
-							className="btn waves-effect waves-light btn-outline-info"
-							style={{ borderRadius: '8px' }}
-						>
-							<Link to='/beneficiary/addBeneficiary'>Add New</Link>
-						</button>
-					</div>
-				</div>
 				<div className="flex-item">
 					{/* <button type="button" className="btn waves-effect waves-light btn-info" style={{ borderRadius: '8px' }}>
 						Add Beneficiary
@@ -432,9 +342,9 @@ const List = ({ projectId }) => {
 					<tr className="border-0">
 						<th className="border-0">S.N.</th>
 						<th className="border-0">Name</th>
-						<th className="border-0">Address</th>
-						<th className="border-0">Phone number</th>
-						<th className="border-0">Token</th>
+						<th className="border-0">Beneficiary</th>
+						<th className="border-0">Token Balance</th>
+						<th className="border-0">View</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -450,7 +360,11 @@ const List = ({ projectId }) => {
 									</td>
 									<td>{d.address || '-'}</td>
 									<td>{d.phone}</td>
-									<td>{fetchingBeneficiaryTokens ? <MiniSpinner /> : d.tokenBalance ? d.tokenBalance : '0'}</td>
+                                    <td className="blue-grey-text  text-darken-4 font-medium">
+                                        <Link to={`/projects/fspDetail`}>
+                                            <i className="fas fa-eye fa-lg"></i>
+                                        </Link>
+									</td>
 								</tr>
 							);
 						})
